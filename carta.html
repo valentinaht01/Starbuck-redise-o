@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menú y Carta - Starbucks Colombia</title>
+
+  <!-- Enlace al archivo CSS principal -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Iconos FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- CDN de Vue 3 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <style>
+    /* Estilos específicos para la vista de Carta */
+    .category-filter {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .btn-filter {
+      background: #0f1f18;
+      color: #9ca3af;
+      border: 1px solid #1f2937;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-filter:hover, .btn-filter.active {
+      background: #006241;
+      color: #ffffff;
+      border-color: #34d399;
+      box-shadow: 0 0 15px rgba(52, 211, 153, 0.2);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto 5rem auto;
+    }
+
+    .product-card {
+      background: rgba(15, 31, 24, 0.7);
+      border: 1px solid #1f2937;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      border-color: #006241;
+    }
+
+    .product-img {
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+      margin: 0 auto 1.2rem auto;
+    }
+
+    .product-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-desc {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .product-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      color: #34d399;
+      background: rgba(52, 211, 153, 0.1);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      align-self: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <div class="app-container">
+      
+      <div class="glow-bg"></div>
+
+      <!-- 1. NAVBAR OFICIAL -->
+      <header class="navbar">
+        <div class="nav-left">
+          <a href="Homepage | Starbuck.html" class="logo-link">
+            <img src="assets/logo.png" alt="Starbucks Logo" class="starbucks-logo-img" />
+          </a>
+          <nav class="nav-links">
+            <a href="carta.html" style="color: #34d399;">CARTA</a>
+            <a href="cafe.html">CAFÉ</a>
+            <a href="novedades.html">NOVEDADES</a>
+            <a href="rewards.html">REWARDS</a>
+          </nav>
+        </div>
+
+        <div class="nav-right">
+          <a href="#" class="store-locator-link">
+            <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 21C16 17.5 19 13.8 19 10C19 6.1 15.9 3 12 3C8.1 3 5 6.1 5 10C5 13.8 8 17.5 12 21Z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span>Buscar una tienda</span>
+          </a>
+          <a href="registro.html" class="btn-navbar-register">Regístrese ahora</a>
+          <a href="login.html" class="btn-navbar-login">Iniciar sesión</a>
+        </div>
+      </header>
+
+      <!-- 2. CONTENIDO PRINCIPAL: CARTA DE PRODUCTOS -->
+      <main class="page-container">
+        
+        <!-- Header de la sección -->
+        <section class="hero-section-simple">
+          <p class="tagline-top" style="text-align: center;">DISFRUTA TU MOMENTO</p>
+          <h1 class="page-title">Nuestra Carta</h1>
+          <p class="section-desc">
+            Explora la variedad de bebidas artesanales, cafés de grano entero seleccionados y deliciosos acompañamientos de Bakery.
+          </p>
+        </section>
+
+        <!-- Filtros de Categorías (Vue.js) -->
+        <div class="category-filter">
+          <button 
+            v-for="cat in categories" 
+            :key="cat.id" 
+            :class="['btn-filter', { active: currentCategory === cat.id }]"
+            @click="currentCategory = cat.id">
+            {{ cat.name }}
+          </button>
+        </div>
+
+        <!-- Catálogo de Productos -->
+        <section class="products-grid">
+          <div v-for="item in filteredProducts" :key="item.id" class="product-card">
+            <img :src="item.image" :alt="item.name" class="product-img">
+            <div>
+              <h3 class="product-title">{{ item.name }}</h3>
+              <p class="product-desc">{{ item.description }}</p>
+            </div>
+            <span class="product-tag">{{ item.categoryName }}</span>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- 3. FOOTER -->
+      <footer class="site-footer">
+        <div class="footer-container">
+          
+          <div class="footer-columns">
+            <div class="footer-brand">
+              <img src="assets/logo.png" alt="Starbucks Logo" class="footer-logo">
+            </div>
+            
+            <div class="footer-col">
+              <h4>Sobre nosotros</h4>
+              <ul>
+                <li><a href="acerca-de-starbucks.html">Acerca de Starbucks</a></li>
+                <li><a href="novedades.html">Trabaja con nosotros</a></li>
+                <li><a href="historias.html">Historias y noticias Starbucks</a></li>
+                <li><a href="notmilk.html">Sobre Notmilk</a></li>
+                <li><a href="cafe.html">Guía de preparación de un buen café en casa</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-col">
+              <h4>Atención al Cliente</h4>
+              <ul>
+                <li><a href="contacto.html">Sugerencias y reclamos</a></li>
+                <li><a href="facturacion.html">Factura Electrónica</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <hr class="footer-divider">
+
+          <div class="footer-middle">
+            <div class="legal-links">
+              <a href="terminos.html">Términos de uso web</a>
+              <a href="aviso-de-privacidad.html">Aviso de Privacidad</a>
+              <a href="terminos.html">Política de tratamiento de datos</a>
+              <a href="reversion-de-pago.html">Reversión de pago</a>
+              <a href="politica-de-garantia.html">Política de garantía</a>
+              <a href="terminos-rewards.html">Términos y Condiciones Starbucks Rewards</a>
+            </div>
+
+            <div class="app-card">
+              <h3>Descarga la App Starbucks Colombia</h3>
+              <p>Disfruta de la mejor experiencia Starbucks directo en tu celular.</p>
+              <div class="app-buttons">
+                <a href="#" class="store-btn">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store">
+                </a>
+                <a href="#" class="store-btn">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-icons">
+            <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://twitter.com" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+          </div>
+
+          <p class="copyright">© 2026. Starbucks Coffee Company. Todos los derechos reservados.</p>
+
+          <div class="sic-banner">
+            <img src="assets/sic.jpg" alt="Superintendencia de Industria y Comercio" class="sic-logo">
+          </div>
+
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <script>
+    const { createApp, ref, computed } = Vue
+
+    createApp({
+      setup() {
+        const currentCategory = ref('todos')
+
+        const categories = [
+          { id: 'todos', name: 'Todos' },
+          { id: 'calientes', name: 'Bebidas Calientes' },
+          { id: 'frias', name: 'Bebidas Frías' },
+          { id: 'frappuccino', name: 'Frappuccino®' },
+          { id: 'cafe-grano', name: 'Café en Grano' },
+          { id: 'alimentos', name: 'Alimentos' }
+        ]
+
+        const products = [
+          {
+            id: 1,
+            name: 'Caramel Macchiato',
+            category: 'calientes',
+            categoryName: 'Bebida Caliente',
+            description: 'Espresso intenso, leche vaporizada con vainilla y una cubierta de rejilla de caramelo.',
+            image: 'assets/logo.png'
+          },
+          {
+            id: 2,
+            name: 'Caffè Latte',
+            category: 'calientes',
+            categoryName: 'Bebida Caliente',
+            description: 'Rico espresso equilibrado con leche al vapor y una fina capa de espuma.',
+            image: 'assets/logo.png'
+          },
+          {
+            id: 3,
+            name: 'Iced Americano',
+            category: 'frias',
+            categoryName: 'Bebida Fría',
+            description: 'Shots de espresso combinados con agua fría y servidos sobre abundante hielo.',
+            image: 'assets/logo.png'
+          },
+          {
+            id: 4,
+            name: 'Cold Brew Tradicional',
+            category: 'frias',
+            categoryName: 'Bebida Fría',
+            description: 'Café infusionado lentamente en agua fría durante 20 horas para un sabor suave e intenso.',
+            image: 'assets/logo.png'
+          },
+          {
+            id: 5,
+            name: 'Mocha Frappuccino®',
+            category: 'frappuccino',
+            categoryName: 'Frappuccino®',
+            description: 'Salsa de moca, café, leche e hielo licuados, cubiertos con crema batida.',
+            image: 'assets/logo.png'
+          },
+          {
+            id: 6,
+            name: 'Java Chip Frappuccino®',
+            category: 'frappuccino',
+            categoryName: 'Frappuccino®',
+            description: 'Chispas de chocolate, salsa de moca, café y hielo licuado con crema batida.',
+            image: 'assets/logo.png'
+          },
+          {
+            id: 7,
+            name: 'Starbucks® Colombia',
+            category: 'cafe-grano',
+            categoryName: 'Café en Grano',
+            description: 'Café de origen 100% colombiano con notas de frutos secos y un toque crujiente.',
+            image: 'assets/logo.png'
+          },
+          {
+            id: 8,
+            name: 'Croissant de Mantequilla',
+            category: 'alimentos',
+            categoryName: 'Bakery',
+            description: 'Clásico holaldrado horneado diariamente con mantequilla de alta calidad.',
+            image: 'assets/logo.png'
+          }
+        ]
+
+        const filteredProducts = computed(() => {
+          if (currentCategory.value === 'todos') {
+            return products
+          }
+          return products.filter(p => p.category === currentCategory.value)
+        })
+
+        return {
+          currentCategory,
+          categories,
+          filteredProducts
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>

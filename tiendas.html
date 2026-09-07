@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Localizador de Tiendas | Starbucks Colombia</title>
+
+  <!-- Estilos globales y Leaflet -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Vue 3 & Leaflet JS -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body class="store-body">
+
+  <div id="app" style="display: flex; flex-direction: column; height: 100vh;">
+    <!-- NAVBAR -->
+    <header class="store-navbar">
+      <a href="Homepage | Starbuck.html" class="back-btn">← Volver al Inicio</a>
+      <a href="Homepage | Starbuck.html" style="font-size: 1.2rem; letter-spacing: 0.5px;">☕ STARBUCKS COLOMBIA</a>
+      <div></div>
+    </header>
+
+    <div class="locator-container">
+      <!-- SIDEBAR IZQUIERDA -->
+      <aside class="sidebar">
+        <!-- Búsqueda -->
+        <div class="search-box">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input 
+              type="text" 
+              v-model="busqueda" 
+              placeholder="Buscar tienda en Bogotá, Medellín, Cali..."
+              @input="filtrarTiendas"
+            />
+          </div>
+          <button class="geo-btn" @click="usarUbicacion">
+            📍 Usar mi ubicación actual
+          </button>
+        </div>
+
+        <!-- Filtros Rápidos -->
+        <div class="filter-chips">
+          <span 
+            class="chip" 
+            :class="{ active: filtroActivo === 'todos' }" 
+            @click="setFiltro('todos')">Todas</span>
+          <span 
+            class="chip" 
+            :class="{ active: filtroActivo === 'Drive-Thru' }" 
+            @click="setFiltro('Drive-Thru')">🚗 Drive-Thru</span>
+          <span 
+            class="chip" 
+            :class="{ active: filtroActivo === 'Wi-Fi' }" 
+            @click="setFiltro('Wi-Fi')">📶 Wi-Fi Gratis</span>
+          <span 
+            class="chip" 
+            :class="{ active: filtroActivo === 'Terraza' }" 
+            @click="setFiltro('Terraza')">🌿 Terraza</span>
+        </div>
+
+        <!-- Lista de Resultados -->
+        <div class="store-list">
+          <div 
+            v-for="tienda in tiendasFiltradas" 
+            :key="tienda.id" 
+            class="store-card"
+            :class="{ selected: tiendaSeleccionada && tiendaSeleccionada.id === tienda.id }"
+            @click="seleccionarTienda(tienda)"
+          >
+            <div class="store-name">{{ tienda.nombre }}</div>
+            <div class="store-address">{{ tienda.direccion }}, {{ tienda.ciudad }}</div>
+            <div class="store-status">● Abierto hoy: {{ tienda.horario }}</div>
+            <div class="store-services">
+              <span v-for="servicio in tienda.servicios" :key="servicio" class="service-tag">
+                {{ servicio }}
+              </span>
+            </div>
+          </div>
+
+          <div v-if="tiendasFiltradas.length === 0" style="padding: 2.5rem; text-align: center; color: #a0c4b6;">
+            No se encontraron tiendas que coincidan con tu búsqueda.
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAPA DERECHA -->
+      <main id="map"></main>
+    </div>
+  </div>
+
+  <script>
+    const { createApp, ref, computed, onMounted } = Vue
+
+    createApp({
+      setup() {
+        const busqueda = ref('')
+        const filtroActivo = ref('todos')
+        const tiendaSeleccionada = ref(null)
+        let map = null
+        let markers = []
+
+        const tiendas = ref([
+          {
+            id: 1,
+            nombre: 'Starbucks Parque 93',
+            ciudad: 'Bogotá',
+            direccion: 'Cra. 13 # 93A-27',
+            horario: '6:00 AM - 10:00 PM',
+            lat: 4.6781,
+            lng: -74.0535,
+            servicios: ['Wi-Fi', 'Terraza', 'Para Llevar']
+          },
+          {
+            id: 2,
+            nombre: 'Starbucks Zona T',
+            ciudad: 'Bogotá',
+            direccion: 'Cl. 82 # 12-18',
+            horario: '6:30 AM - 10:30 PM',
+            lat: 4.6669,
+            lng: -74.0553,
+            servicios: ['Wi-Fi', 'Terraza', 'Para Llevar']
+          },
+          {
+            id: 3,
+            nombre: 'Starbucks Milla de Oro',
+            ciudad: 'Medellín',
+            direccion: 'Cra. 43A # 3 Sur-130 Local 101',
+            horario: '6:00 AM - 9:30 PM',
+            lat: 6.2023,
+            lng: -75.5718,
+            servicios: ['Wi-Fi', 'Terraza', 'Para Llevar']
+          },
+          {
+            id: 4,
+            nombre: 'Starbucks El Tesoro',
+            ciudad: 'Medellín',
+            direccion: 'Cra. 25A # 1A Sur-45',
+            horario: '7:00 AM - 9:00 PM',
+            lat: 6.1972,
+            lng: -75.5583,
+            servicios: ['Wi-Fi', 'Para Llevar']
+          },
+          {
+            id: 5,
+            nombre: 'Starbucks Granada',
+            ciudad: 'Cali',
+            direccion: 'Av. 9 Norte # 14N-22',
+            horario: '7:00 AM - 10:00 PM',
+            lat: 3.4561,
+            lng: -76.5362,
+            servicios: ['Wi-Fi', 'Terraza', 'Drive-Thru']
+          },
+          {
+            id: 6,
+            nombre: 'Starbucks Chipichape',
+            ciudad: 'Cali',
+            direccion: 'Calle 38 N # 6N-35 Local 09',
+            horario: '8:00 AM - 9:00 PM',
+            lat: 3.4764,
+            lng: -76.5276,
+            servicios: ['Wi-Fi', 'Para Llevar']
+          },
+          {
+            id: 7,
+            nombre: 'Starbucks Buenavista 2',
+            ciudad: 'Barranquilla',
+            direccion: 'Cra. 53 # 98-02',
+            horario: '8:00 AM - 10:00 PM',
+            lat: 11.0135,
+            lng: -74.8231,
+            servicios: ['Wi-Fi', 'Terraza', 'Drive-Thru']
+          },
+          {
+            id: 8,
+            nombre: 'Starbucks Plaza Bolívar',
+            ciudad: 'Cartagena',
+            direccion: 'Cra. 4 # 33A Plaza Bolívar',
+            horario: '7:30 AM - 10:00 PM',
+            lat: 10.4236,
+            lng: -75.5512,
+            servicios: ['Wi-Fi', 'Terraza']
+          },
+          {
+            id: 9,
+            nombre: 'Starbucks Bazaar Chía',
+            ciudad: 'Chía',
+            direccion: 'Km 2 Vía Chía-Cajicá Local 1-07',
+            horario: '7:00 AM - 9:00 PM',
+            lat: 4.8715,
+            lng: -74.0412,
+            servicios: ['Wi-Fi', 'Drive-Thru', 'Terraza']
+          }
+        ])
+
+        const tiendasFiltradas = computed(() => {
+          return tiendas.value.filter(t => {
+            const coincideTexto = t.nombre.toLowerCase().includes(busqueda.value.toLowerCase()) ||
+                                  t.ciudad.toLowerCase().includes(busqueda.value.toLowerCase()) ||
+                                  t.direccion.toLowerCase().includes(busqueda.value.toLowerCase())
+            
+            const coincideFiltro = filtroActivo.value === 'todos' || t.servicios.includes(filtroActivo.value)
+
+            return coincideTexto && coincideFiltro
+          })
+        })
+
+        const initMap = () => {
+          map = L.map('map').setView([4.5709, -74.2973], 6)
+
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+          }).addTo(map)
+
+          actualizarMarcadores()
+        }
+
+        const actualizarMarcadores = () => {
+          markers.forEach(m => map.removeLayer(m))
+          markers = []
+
+          tiendasFiltradas.value.forEach(t => {
+            const marker = L.marker([t.lat, t.lng]).addTo(map)
+            marker.bindPopup(`
+              <div style="font-family: sans-serif; padding: 4px;">
+                <b style="color: #4ade80; font-size: 14px;">${t.nombre}</b><br>
+                <span style="font-size: 12px; color: #b0d3c5;">${t.direccion}</span><br>
+                <small style="color: #72dbb1; display: inline-block; margin-top: 4px;">Horario: ${t.horario}</small>
+              </div>
+            `)
+
+            marker.on('click', () => {
+              tiendaSeleccionada.value = t
+            })
+
+            markers.push(marker)
+          })
+        }
+
+        const seleccionarTienda = (tienda) => {
+          tiendaSeleccionada.value = tienda
+          map.flyTo([tienda.lat, tienda.lng], 15, { duration: 1.2 })
+          
+          const marker = markers.find(m => m.getLatLng().lat === tienda.lat && m.getLatLng().lng === tienda.lng)
+          if (marker) marker.openPopup()
+        }
+
+        const setFiltro = (filtro) => {
+          filtroActivo.value = filtro
+          actualizarMarcadores()
+        }
+
+        const filtrarTiendas = () => {
+          actualizarMarcadores()
+        }
+
+        const usarUbicacion = () => {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (pos) => {
+                const userLat = pos.coords.latitude
+                const userLng = pos.coords.longitude
+                map.flyTo([userLat, userLng], 13)
+
+                L.circle([userLat, userLng], {
+                  color: '#0f5238',
+                  fillColor: '#0f5238',
+                  fillOpacity: 0.4,
+                  radius: 1000
+                }).addTo(map).bindPopup("Estás aquí").openPopup()
+              },
+              () => {
+                alert("No se pudo obtener tu ubicación.")
+              }
+            )
+          } else {
+            alert("Tu navegador no soporta geolocalización.")
+          }
+        }
+
+        onMounted(() => {
+          initMap()
+        })
+
+        return {
+          busqueda,
+          filtroActivo,
+          tiendaSeleccionada,
+          tiendasFiltradas,
+          seleccionarTienda,
+          setFiltro,
+          filtrarTiendas,
+          usarUbicacion
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>

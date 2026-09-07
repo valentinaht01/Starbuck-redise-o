@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Starbucks® Rewards - Starbucks Colombia</title>
+
+  <!-- Enlace al archivo CSS principal -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Iconos FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- CDN de Vue 3 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <style>
+    .rewards-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto 4rem auto;
+    }
+
+    .step-card {
+      background: rgba(15, 31, 24, 0.7);
+      border: 1px solid #1f2937;
+      border-radius: 1rem;
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .step-card:hover {
+      transform: translateY(-5px);
+      border-color: #006241;
+    }
+
+    .step-number {
+      width: 50px;
+      height: 50px;
+      background: #006241;
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin: 0 auto 1.25rem auto;
+      border: 2px solid #34d399;
+    }
+
+    .step-card h3 {
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .step-card p {
+      color: #9ca3af;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .levels-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto 5rem auto;
+    }
+
+    .level-card {
+      background: rgba(15, 31, 24, 0.9);
+      border-radius: 1rem;
+      padding: 2.5rem 2rem;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .level-card.green {
+      border: 1px solid #006241;
+    }
+
+    .level-card.gold {
+      border: 1px solid #d97706;
+      background: linear-gradient(135deg, rgba(217, 119, 6, 0.1) 0%, rgba(15, 31, 24, 0.9) 100%);
+    }
+
+    .level-badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      margin-bottom: 1rem;
+    }
+
+    .green .level-badge {
+      background: rgba(52, 211, 153, 0.15);
+      color: #34d399;
+    }
+
+    .gold .level-badge {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+    }
+
+    .level-card h3 {
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .level-subtitle {
+      color: #9ca3af;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .benefit-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .benefit-list li {
+      color: #d1d5db;
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      line-height: 1.5;
+    }
+
+    .benefit-list li i {
+      margin-top: 0.2rem;
+    }
+
+    .green .benefit-list i { color: #34d399; }
+    .gold .benefit-list i { color: #fbbf24; }
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <div class="app-container">
+      
+      <div class="glow-bg"></div>
+
+      <!-- 1. NAVBAR OFICIAL -->
+      <header class="navbar">
+        <div class="nav-left">
+          <a href="Homepage | Starbuck.html" class="logo-link">
+            <img src="assets/logo.png" alt="Starbucks Logo" class="starbucks-logo-img" />
+          </a>
+          <nav class="nav-links">
+            <a href="carta.html">CARTA</a>
+            <a href="cafe.html">CAFÉ</a>
+            <a href="novedades.html">NOVEDADES</a>
+            <a href="rewards.html" style="color: #34d399;">REWARDS</a>
+          </nav>
+        </div>
+
+        <div class="nav-right">
+          <a href="#" class="store-locator-link">
+            <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 21C16 17.5 19 13.8 19 10C19 6.1 15.9 3 12 3C8.1 3 5 6.1 5 10C5 13.8 8 17.5 12 21Z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span>Buscar una tienda</span>
+          </a>
+          <a href="registro.html" class="btn-navbar-register">Regístrese ahora</a>
+          <a href="login.html" class="btn-navbar-login">Iniciar sesión</a>
+        </div>
+      </header>
+
+      <!-- 2. CONTENIDO PRINCIPAL: STARBUCKS REWARDS -->
+      <main class="page-container">
+        
+        <!-- Hero Section -->
+        <section class="hero-section-simple">
+          <p class="tagline-top" style="text-align: center;">PROGRAMA DE LEALTAD</p>
+          <h1 class="page-title">Starbucks® Rewards</h1>
+          <p class="section-desc">
+            Obtén bebidas gratis, ofertas exclusivas y sorpresas de cumpleaños acumulando Estrellas en cada visita.
+          </p>
+          <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+            <a href="registro.html" class="btn-navbar-register" style="padding: 0.85rem 2rem; font-size: 1rem; text-decoration: none;">Únete al programa</a>
+            <a href="login.html" class="btn-navbar-login" style="padding: 0.85rem 2rem; font-size: 1rem; text-decoration: none;">Ingresar a mi cuenta</a>
+          </div>
+        </section>
+
+        <!-- Pasos para Participar -->
+        <section class="rewards-steps">
+          
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Crea tu cuenta</h3>
+            <p>Regístrate a través de la aplicación móvil de Starbucks® Colombia o en nuestro sitio web oficial en un solo paso.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Acumula Estrellas</h3>
+            <p>Gana 1 Estrella por cada $2.000 COP pagando con tu Starbucks Card digital, o 1 Estrella por cada $4.000 COP con otros medios de pago.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Canjea Recompensas</h3>
+            <p>Disfruta de tus bebidas artesanales favoritas, opciones de bakery y beneficios especiales preparados exclusivamente para ti.</p>
+          </div>
+
+        </section>
+
+        <!-- Niveles del Programa -->
+        <h2 style="text-align: center; color: #ffffff; font-family: 'Montserrat', sans-serif; font-size: 1.8rem; margin-bottom: 2.5rem;">
+          Conoce los Niveles y Sus Beneficios
+        </h2>
+
+        <section class="levels-container">
+          
+          <!-- Nivel Green -->
+          <div class="level-card green">
+            <span class="level-badge">Nivel Inicial</span>
+            <h3>Nivel Green</h3>
+            <p class="level-subtitle">Al registrarte en el programa</p>
+            <ul class="benefit-list">
+              <li><i class="fa-solid fa-star"></i> Bebida de cumpleaños de tamaño Alto gratis.</li>
+              <li><i class="fa-solid fa-star"></i> Refill de café del día o té helado en la misma visita.</li>
+              <li><i class="fa-solid fa-star"></i> Acceso anticipado a lanzamientos de productos nuevos.</li>
+              <li><i class="fa-solid fa-star"></i> Eventos y promociones exclusivas para miembros.</li>
+            </ul>
+          </div>
+
+          <!-- Nivel Gold -->
+          <div class="level-card gold">
+            <span class="level-badge">Nivel Premium</span>
+            <h3>Nivel Gold</h3>
+            <p class="level-subtitle">Al alcanzar 100 Estrellas en 12 meses</p>
+            <ul class="benefit-list">
+              <li><i class="fa-solid fa-crown"></i> Todos los beneficios del Nivel Green incluidos.</li>
+              <li><i class="fa-solid fa-crown"></i> Una bebida preparada o producto de Bakery gratis por cada 30 Estrellas adicionales.</li>
+              <li><i class="fa-solid fa-crown"></i> Tarjeta Gold digital personalizada dentro de la App.</li>
+              <li><i class="fa-solid fa-crown"></i> Ofertas y cupones de descuento personalizados.</li>
+            </ul>
+          </div>
+
+        </section>
+
+        <!-- Enlace a Términos del Programa -->
+        <div style="text-align: center; margin-bottom: 5rem;">
+          <a href="terminos-rewards.html" style="color: #34d399; font-weight: 600; text-decoration: underline; font-size: 0.95rem;">
+            Consulta los Términos y Condiciones oficiales de Starbucks® Rewards &rarr;
+          </a>
+        </div>
+
+      </main>
+
+      <!-- 3. FOOTER -->
+      <footer class="site-footer">
+        <div class="footer-container">
+          
+          <div class="footer-columns">
+            <div class="footer-brand">
+              <img src="assets/logo.png" alt="Starbucks Logo" class="footer-logo">
+            </div>
+            
+            <div class="footer-col">
+              <h4>Sobre nosotros</h4>
+              <ul>
+                <li><a href="acerca-de-starbucks.html">Acerca de Starbucks</a></li>
+                <li><a href="novedades.html">Trabaja con nosotros</a></li>
+                <li><a href="historias.html">Historias y noticias Starbucks</a></li>
+                <li><a href="notmilk.html">Sobre Notmilk</a></li>
+                <li><a href="como-elaborar-cafe.html">Guía de preparación de un buen café en casa</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-col">
+              <h4>Atención al Cliente</h4>
+              <ul>
+                <li><a href="contacto.html">Sugerencias y reclamos</a></li>
+                <li><a href="facturacion.html">Factura Electrónica</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <hr class="footer-divider">
+
+          <div class="footer-middle">
+            <div class="legal-links">
+              <a href="terminos.html">Términos de uso web</a>
+              <a href="aviso-de-privacidad.html">Aviso de Privacidad</a>
+              <a href="terminos.html">Política de tratamiento de datos</a>
+              <a href="reversion-de-pago.html">Reversión de pago</a>
+              <a href="politica-de-garantia.html">Política de garantía</a>
+              <a href="terminos-rewards.html">Términos y Condiciones Starbucks Rewards</a>
+            </div>
+
+            <div class="app-card">
+              <h3>Descarga la App Starbucks Colombia</h3>
+              <p>Disfruta de la mejor experiencia Starbucks directo en tu celular.</p>
+              <div class="app-buttons">
+                <a href="#" class="store-btn">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store">
+                </a>
+                <a href="#" class="store-btn">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-icons">
+            <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://twitter.com" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+          </div>
+
+          <p class="copyright">© 2026. Starbucks Coffee Company. Todos los derechos reservados.</p>
+
+          <div class="sic-banner">
+            <img src="assets/sic.jpg" alt="Superintendencia de Industria y Comercio" class="sic-logo">
+          </div>
+
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue
+    createApp({
+      setup() {
+        return {}
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>

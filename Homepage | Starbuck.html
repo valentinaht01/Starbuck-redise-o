@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Starbucks Redesign - Colombia</title>
+
+  <!-- Enlace al archivo CSS -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Iconos FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- CDN de Vue 3 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+  <div id="app">
+    <div class="app-container">
+      
+      <div class="glow-bg"></div>
+
+      <!-- 1. NAVBAR OFICIAL -->
+      <header class="navbar">
+        <div class="nav-left">
+          <a href="Homepage | Starbuck.html" class="logo-link">
+            <img src="assets/logo.png" alt="Starbucks Logo" class="starbucks-logo-img" />
+          </a>
+          <nav class="nav-links">
+            <a href="carta.html" class="active">CARTA</a>
+            <a href="cafe.html">CAFÉ</a>
+            <a href="novedades.html">NOVEDADES</a>
+            <a href="rewards.html">REWARDS</a>
+          </nav>
+        </div>
+
+        <div class="nav-right">
+  <!-- Apunta a la página de tiendas o a Google Maps / localizador oficial -->
+  <a href="tiendas.html" class="store-locator-link">
+    <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 21C16 17.5 19 13.8 19 10C19 6.1 15.9 3 12 3C8.1 3 5 6.1 5 10C5 13.8 8 17.5 12 21Z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </svg>
+    <span>Buscar una tienda</span>
+  </a>
+
+  <!-- Apunta a tu archivo de registro -->
+  <a href="registro.html" class="btn-navbar-register">Regístrese ahora</a>
+  
+  <a href="login.html" class="btn-navbar-login">Iniciar sesión</a>
+</div>
+      </header>
+
+      <!-- 2. CONTENIDO PRINCIPAL (Hero / Vue) -->
+      <main class="main-content">
+        <section class="left-column">
+          <span class="tagline-top">{{ bebidaActual.subtitulo }}</span>
+          <h1 class="main-title">{{ bebidaActual.tagline }}</h1>
+
+          <div class="badges-group">
+            <div class="price-badge">
+              <span class="price-text">{{ bebidaActual.precio }}</span>
+              <span class="sale-text">¡EN VENTA!</span>
+            </div>
+            <div class="delivery-badge">🛵 {{ bebidaActual.envio }}</div>
+          </div>
+
+          <div>
+            <a href="carta.html" class="cta-button" style="display: inline-block; text-align: center; text-decoration: none;">CONOCE NUESTROS PRODUCTOS</a>
+          </div>
+
+          <div>
+            <div class="thumbnails-container">
+              <button 
+                v-for="(item, idx) in bebidas" 
+                :key="item.id"
+                @click="indiceSeleccionado = idx"
+                class="thumb-btn"
+                :class="{ active: indiceSeleccionado === idx }"
+              >
+                <img :src="item.imagen" :alt="item.nombre" />
+              </button>
+            </div>
+            <p class="location-tag">STARBUCKS COLOMBIA</p>
+          </div>
+        </section>
+
+        <section class="right-column">
+          <div class="green-panel" :style="{ backgroundColor: bebidaActual.colorPanel }">
+            <span class="writing-mode-vertical">{{ bebidaActual.tipo }}</span>
+          </div>
+          <div class="drink-wrapper">
+            <div class="drink-container">
+              <div class="drink-shadow"></div>
+              <img 
+                :key="bebidaActual.id"
+                :src="bebidaActual.imagen" 
+                :alt="bebidaActual.nombre"
+                class="drink-image"
+              />
+              <button class="like-button">❤️</button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- 3. SECCIÓN REWARDS -->
+      <section class="rewards-section">
+        <h2 class="rewards-title">Saluda a la infinidad de opciones y, sí, al café gratis.</h2>
+        
+        <div class="rewards-grid">
+          <div class="reward-item">
+            <div class="reward-icon">
+              <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#D4E9E2"/><path d="M32 12L36.5 23.5L49 24.2L39.5 32.5L42.5 44.8L32 38.3L21.5 44.8L24.5 32.5L15 24.2L27.5 23.5L32 12Z" fill="#D4A373"/></svg>
+            </div>
+            <div class="reward-text">
+              <h3>Acumula Estrellas con cada compra</h3>
+              <p>$2000 = 1 Estrella⭐</p>
+            </div>
+          </div>
+
+          <div class="reward-item">
+            <div class="reward-icon">
+              <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#D4E9E2"/><rect x="22" y="22" width="20" height="28" rx="4" fill="#006241"/></svg>
+            </div>
+            <div class="reward-text">
+              <h3>¡50 Estrellas es una bebida de regalo!</h3>
+              <p>¿La única forma en que Starbucks® sabe mejor? Cuando es gratis</p>
+            </div>
+          </div>
+
+          <div class="reward-item">
+            <div class="reward-icon">
+              <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#D4E9E2"/><path d="M22 26C22 23.7909 23.7909 22 26 22H38C40.2091 22 42 23.7909 42 26V46H22V26Z" fill="#006241"/></svg>
+            </div>
+            <div class="reward-text">
+              <h3>100 Estrellas en el año = Nivel Gold</h3>
+              <p>El nivel Gold desbloquea emocionantes regalos durante todo el año: bebida o pieza de panadería de regalo y mucho más.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="rewards-actions">
+          <a href="registro.html" class="btn-navbar-register">Regístrese ahora</a>
+          <a href="login.html" class="btn-login-dark">Iniciar sesión</a>
+        </div>
+      </section>
+
+      <!-- 4. SECCIÓN STORE LOCATOR -->
+      <section class="store-locator-section">
+        <div class="store-card">
+          <h2>Find your closest store</h2>
+          <p>Get directions to your closest Starbucks store by sharing your location</p>
+          <button class="btn-share-location">Share location</button>
+        </div>
+        <div class="map-container">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d127236.43615277864!2d-74.062828!3d4.710989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2sco!4v1710000000000!5m2!1ses!2sco" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </section>
+
+     <site-footer></site-footer>
+    </div>
+  </div>
+<div id="products-grid" class="products-grid">
+  <!-- Aquí se renderizan los productos automáticamente desde MongoDB -->
+</div>
+ 
+
+  <!-- 2. Tu script EXACTAMENTE IGUAL, solo con 2 cambios marcados abajo -->
+  <script>
+    const { createApp, ref, computed } = Vue
+
+    // CAMBIO 1: Guardamos la app en la variable 'app' (en vez de hacer .mount al final)
+    const app = createApp({
+      setup() {
+        const bebidas = ref([
+          {
+            id: 1,
+            subtitulo: 'STARBUCKS ES...',
+            tagline: 'AMOR AL CAFÉ',
+            tipo: 'FRAPPUCCINO',
+            nombre: 'Caramel Frappuccino',
+            precio: '14.000$',
+            envio: 'ENVÍO GRATIS',
+            imagen: 'assets/caramel frappuccino.png',
+            colorPanel: '#0f5238'
+          },
+          {
+            id: 2,
+            subtitulo: 'REFRESCANTE Y ÚNICO',
+            tagline: 'SABOR A VERANO',
+            tipo: 'REFRESHER',
+            nombre: 'Strawberry Açaí',
+            precio: '12.500$',
+            envio: 'ENVÍO GRATIS',
+            imagen: 'assets/_.png',
+            colorPanel: '#801835'
+          },
+          {
+            id: 3,
+            subtitulo: 'TEXTURA SUAVE',
+            tagline: 'CAFÉ CLÁSICO',
+            tipo: 'BEBIDA CALIENTE',
+            nombre: 'Vaso Clásico',
+            precio: '11.000$',
+            envio: 'ENVÍO GRATIS',
+            imagen: 'assets/baso.png',
+            colorPanel: '#0e4d31'
+          },
+          {
+            id: 4,
+            subtitulo: 'SABOR INTENSO',
+            tagline: 'FRAPPE ESPECIAL',
+            tipo: 'CAFÉ FRÍO',
+            nombre: 'Frappuccino Botella',
+            precio: '15.000$',
+            envio: 'ENVÍO GRATIS',
+            imagen: 'assets/frappuccino.png',
+            colorPanel: '#3d2314'
+          }
+        ])
+
+        const indiceSeleccionado = ref(0)
+        const bebidaActual = computed(() => bebidas.value[indiceSeleccionado.value])
+
+        return {
+          bebidas,
+          indiceSeleccionado,
+          bebidaActual
+        }
+      }
+    })
+
+    // CAMBIO 2: Registramos el footer y montamos al final
+    app.component('site-footer', SiteFooter)
+    app.mount('#app')
+  </script>
+   <!-- 1. Llamas al archivo footer.js (que creaste en la misma carpeta) -->
+  <script src="footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión - Starbucks Colombia</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-left">
+      <a href="Homepage | Starbuck.html" class="logo-link">
+        <img src="assets/logo.png" alt="Starbucks Logo" class="starbucks-logo-img" />
+      </a>
+      <nav class="nav-links">
+        <a href="carta.html">CARTA</a>
+        <a href="cafe.html">CAFÉ</a>
+        <a href="novedades.html">NOVEDADES</a>
+        <a href="rewards.html">REWARDS</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-container auth-container">
+    <div class="auth-card">
+      <h1 class="auth-title">Iniciar sesión</h1>
+      <p class="auth-subtitle">Ingresa tus datos para acceder a tu cuenta de Starbucks Rewards.</p>
+
+      <form class="auth-form" action="#" method="POST" onsubmit="event.preventDefault();">
+        <div class="form-group">
+          <label for="email">Correo electrónico *</label>
+          <input type="email" id="email" placeholder="ejemplo@correo.com" required class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contraseña *</label>
+          <input type="password" id="password" placeholder="••••••••" required class="form-input">
+        </div>
+
+        <div class="form-options">
+          <label class="checkbox-label">
+            <input type="checkbox"> Recordarme
+          </label>
+          <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <button type="submit" class="auth-btn-submit">Iniciar sesión</button>
+      </form>
+
+      <div class="auth-divider">
+        <span>¿No tienes cuenta?</span>
+      </div>
+
+      <a href="registro.html" class="auth-btn-secondary">Regístrate en Starbucks Rewards</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p class="copyright">© 2026. Starbucks Coffee Company. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

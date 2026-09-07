@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conoce más sobre NotMilk® - Starbucks Colombia</title>
+
+  <!-- Enlace al archivo CSS principal -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Iconos FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- CDN de Vue 3 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+  <div id="app">
+    <div class="app-container">
+      
+      <div class="glow-bg"></div>
+
+      <!-- 1. NAVBAR OFICIAL -->
+      <header class="navbar">
+        <div class="nav-left">
+          <a href="Homepage | Starbuck.html" class="logo-link">
+            <img src="assets/logo.png" alt="Starbucks Logo" class="starbucks-logo-img" />
+          </a>
+          <nav class="nav-links">
+            <a href="carta.html">CARTA</a>
+            <a href="cafe.html" class="active">CAFÉ</a>
+            <a href="novedades.html">NOVEDADES</a>
+            <a href="rewards.html">REWARDS</a>
+          </nav>
+        </div>
+
+        <div class="nav-right">
+          <a href="#" class="store-locator-link">
+            <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 21C16 17.5 19 13.8 19 10C19 6.1 15.9 3 12 3C8.1 3 5 6.1 5 10C5 13.8 8 17.5 12 21Z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span>Buscar una tienda</span>
+          </a>
+          <a href="registro.html" class="btn-navbar-register">Regístrese ahora</a>
+          <a href="login.html" class="btn-navbar-login">Iniciar sesión</a>
+        </div>
+      </header>
+
+      <!-- 2. CONTENIDO PRINCIPAL: CONOCE MÁS SOBRE NOTMILK -->
+      <main class="page-container">
+        
+        <!-- Header de la sección -->
+        <section class="hero-section-simple">
+          <p class="tagline-top" style="text-align: center;">100% VEGETAL • DESARROLLADO CON IA</p>
+          <h1 class="page-title">Sabe a leche, pero no es leche.</h1>
+          <p class="section-desc">
+            En alianza con NotCo®, traemos a Starbucks® Colombia una innovadora alternativa de origen vegetal creada a partir de algoritmos de inteligencia artificial para entregarte la mejor textura, cremosa espuma y el sabor impecable que amas en tus bebidas favoritas.
+          </p>
+        </section>
+
+        <!-- Banner Destacado / NotMilk Feature -->
+        <section class="news-container" style="margin-bottom: 4rem;">
+          <div class="news-card">
+            <div class="news-img" style="background-color: #051c13; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+              <img src="assets/caramel frappuccino.png" alt="Starbucks NotMilk Drink" style="max-height: 380px; object-fit: contain;">
+            </div>
+            <div class="news-content">
+              <span class="product-badge">STARBUCKS® + NOTCO®</span>
+              <h2>Una nueva era vegetal en tu taza</h2>
+              <p style="color: #d1d5db; line-height: 1.6;">
+                Nuestros baristas ahora preparan tus Latte, Cappuccino, Caramel Macchiato y Frappuccino® preferidos con NotMilk®. Logra una emulsión perfecta con un microespumado increíble sin alterar las notas aromáticas de nuestros granos de café 100% colombiano.
+              </p>
+              <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="carta.html" class="btn-navbar-register" style="text-decoration: none;">Ver Carta de Bebidas</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ¿Por qué elegir NotMilk? Grid de Características -->
+        <section style="margin-bottom: 5rem;">
+          <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.8rem; margin-bottom: 2rem; text-align: center; color: #ffffff;">
+            ¿Por qué probar NotMilk® en Starbucks®?
+          </h2>
+
+          <div class="products-grid">
+            
+            <!-- Característica 1 -->
+            <div class="product-card">
+              <div class="product-img-wrapper" style="font-size: 3rem; color: #34d399;">
+                🥛
+              </div>
+              <div class="product-info">
+                <span class="product-badge">CREMOSIDAD</span>
+                <h3>Mismo Sabor y Textura</h3>
+                <p>
+                  Desarrollada para igualar el perfil de sabor, la densidad y la cremosa sensación en boca de la leche tradicional.
+                </p>
+              </div>
+            </div>
+
+            <!-- Característica 2 -->
+            <div class="product-card">
+              <div class="product-img-wrapper" style="font-size: 3rem; color: #34d399;">
+                🤖
+              </div>
+              <div class="product-info">
+                <span class="product-badge">TECNOLOGÍA</span>
+                <h3>Creada por Giuseppe (IA)</h3>
+                <p>
+                  Diseñada mediante Inteligencia Artificial combinando ingredientes como proteína de arveja, concentrado de piña y repollo.
+                </p>
+              </div>
+            </div>
+
+            <!-- Característica 3 -->
+            <div class="product-card">
+              <div class="product-img-wrapper" style="font-size: 3rem; color: #34d399;">
+                🌍
+              </div>
+              <div class="product-info">
+                <span class="product-badge">SOSTENIBILIDAD</span>
+                <h3>Sustentable e Indulgente</h3>
+                <p>
+                  Su producción consume significativamente menos agua y genera un menor nivel de emisiones de CO2.
+                </p>
+              </div>
+            </div>
+
+            <!-- Característica 4 -->
+            <div class="product-card">
+              <div class="product-img-wrapper" style="font-size: 3rem; color: #34d399;">
+                🌱
+              </div>
+              <div class="product-info">
+                <span class="product-badge">SALUDABLE</span>
+                <h3>Libre de Lactosa y Gluten</h3>
+                <p>
+                  Opción 100% vegetal, apta para veganos, libre de lactosa, colesterol y transgénicos.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- CTA Starbucks Rewards -->
+        <section class="step-card" style="margin-bottom: 4rem; background-color: #006241;">
+          <h2 style="font-size: 1.8rem; margin-bottom: 1rem; color: #ffffff;">Pídela personalizada en tu tienda favorita</h2>
+          <p style="color: #e5e7eb; margin-bottom: 2rem;">Acumula Estrellas en cada consumo pidiendo tu bebida con NotMilk®.</p>
+          <a href="registro.html" class="btn-share-location" style="text-decoration: none; display: inline-block;">Regístrate en Starbucks® Rewards</a>
+        </section>
+
+      </main>
+
+      <!-- 3. FOOTER -->
+      <footer class="site-footer">
+        <div class="footer-container">
+          
+          <div class="footer-columns">
+            <div class="footer-brand">
+              <img src="assets/logo.png" alt="Starbucks Logo" class="footer-logo">
+            </div>
+            
+            <div class="footer-col">
+              <h4>Sobre nosotros</h4>
+              <ul>
+                <li><a href="acerca-de-starbucks.html">Acerca de Starbucks</a></li>
+                <li><a href="novedades.html">Trabaja con nosotros</a></li>
+                <li><a href="historias.html">Historias y noticias Starbucks</a></li>
+                <li><a href="notmilk.html">Sobre Notmilk</a></li>
+                <li><a href="cafe.html">Guía de preparación de un buen café en casa</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-col">
+              <h4>Atención al Cliente</h4>
+              <ul>
+                <li><a href="terminos.html">Sugerencias y reclamos</a></li>
+                <li><a href="terminos.html">Factura Electrónica</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <hr class="footer-divider">
+
+          <div class="footer-middle">
+            <div class="legal-links">
+              <a href="terminos.html">Términos de uso web</a>
+              <a href="terminos.html">Aviso de Privacidad</a>
+              <a href="terminos.html">Política de tratamiento de datos</a>
+              <a href="terminos.html">Reversión de pago</a>
+              <a href="terminos.html">Política de garantía</a>
+              <a href="rewards.html">Términos y Condiciones Starbucks Rewards</a>
+            </div>
+
+            <div class="app-card">
+              <h3>Descarga la App Starbucks Colombia</h3>
+              <p>Disfruta de la mejor experiencia Starbucks directo en tu celular.</p>
+              <div class="app-buttons">
+                <a href="#" class="store-btn">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store">
+                </a>
+                <a href="#" class="store-btn">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-icons">
+            <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://twitter.com" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+          </div>
+
+          <p class="copyright">© 2026. Starbucks Coffee Company. Todos los derechos reservados.</p>
+
+          <div class="sic-banner">
+            <img src="assets/sic.jpg" alt="Superintendencia de Industria y Comercio" class="sic-logo">
+          </div>
+
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue
+    createApp({
+      setup() {
+        return {}
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>

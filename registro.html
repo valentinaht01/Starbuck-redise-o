@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro - Starbucks Colombia</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-left">
+      <a href="Homepage | Starbuck.html" class="logo-link">
+        <img src="assets/logo.png" alt="Starbucks Logo" class="starbucks-logo-img" />
+      </a>
+      <nav class="nav-links">
+        <a href="carta.html">CARTA</a>
+        <a href="cafe.html">CAFÉ</a>
+        <a href="novedades.html">NOVEDADES</a>
+        <a href="rewards.html">REWARDS</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-container auth-container">
+    <div class="auth-card">
+      <h1 class="auth-title">Crear una cuenta</h1>
+      <p class="auth-subtitle">Únete a Starbucks® Rewards para ganar estrellas y disfrutar de recompensas.</p>
+
+      <form class="auth-form" action="#" method="POST" onsubmit="event.preventDefault();">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nombre">Nombre *</label>
+            <input type="text" id="nombre" placeholder="Tu nombre" required class="form-input">
+          </div>
+          <div class="form-group">
+            <label for="apellido">Apellido *</label>
+            <input type="text" id="apellido" placeholder="Tu apellido" required class="form-input">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email-reg">Correo electrónico *</label>
+          <input type="email" id="email-reg" placeholder="ejemplo@correo.com" required class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="pass-reg">Contraseña *</label>
+          <input type="password" id="pass-reg" placeholder="Crea tu contraseña" required class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" required> Acepto los <a href="terminos.html" style="color: #34d399;">Términos de uso</a> y la <a href="terminos.html" style="color: #34d399;">Política de privacidad</a>.
+          </label>
+        </div>
+
+        <button type="submit" class="auth-btn-submit">Crear cuenta</button>
+      </form>
+
+      <div class="auth-divider">
+        <span>¿Ya tienes cuenta?</span>
+      </div>
+
+      <a href="login.html" class="auth-btn-secondary">Iniciar sesión</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p class="copyright">© 2026. Starbucks Coffee Company. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
